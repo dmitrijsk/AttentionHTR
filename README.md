@@ -46,8 +46,8 @@ For fine-tuning and predictions use `train.py` and `text.py`, respectively, as d
 
 ## References
 
-[1]: Baek, J., Kim, G., Lee, J., Park, S., Han, D., Yun, S., ... & Lee, H. (2019). What is wrong with scene text recognition model comparisons? dataset and model analysis. In *Proceedings of the IEEE/CVF International Conference on Computer Vision* (pp. 4715-4723). https://arxiv.org/abs/1904.01906
-[2]: Krishnan, P., Kovvuri, R., Pang, G., Vassilev, B., & Hassner, T. (2021). TextStyleBrush: Transfer of Text Aesthetics from a Single Example. *arXiv preprint* arXiv:2106.08385. https://arxiv.org/abs/2106.08385
+[1]: Baek, J. et al. (2019). What is wrong with scene text recognition model comparisons? dataset and model analysis. In *Proceedings of the IEEE/CVF International Conference on Computer Vision* (pp. 4715-4723). https://arxiv.org/abs/1904.01906 <br />
+[2]: Krishnan, P. et al. (2021). TextStyleBrush: Transfer of Text Aesthetics from a Single Example. *arXiv preprint* arXiv:2106.08385. https://arxiv.org/abs/2106.08385 <br />
 [3]: Marti, U. V., & Bunke, H. (2002). The IAM-database: an English sentence database for offline handwriting recognition. *International Journal on Document Analysis and Recognition*, 5(1), 39-46. https://doi.org/10.1007/s100320200071
 
 ## Citation
@@ -56,5 +56,5 @@ For fine-tuning and predictions use `train.py` and `text.py`, respectively, as d
 
 ## Contact
 
-Dmitrijs Kass (dmitrijs.kass@it.uu.se)
+Dmitrijs Kass (dmitrijs.kass@it.uu.se) <br />
 Ekta Vats (ekta.vats@abm.uu.se)
