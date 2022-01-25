@@ -4,7 +4,6 @@ PyTorch implementation of an end-to-end Handwritten Text Recognition (HTR) syste
 
 For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390
 
-
 ## Getting started
 
 * Download our pre-trained models from [here](https://drive.google.com/drive/folders/1h6edewgRUTJPzI81Mn0eSsqItnk9RMeO?usp=sharing). Details [below](#our-pre-trained-models).
@@ -34,7 +33,7 @@ Prepare the train, validation (for fine-tuning) and test (for testing and for pr
 
 ### LMDB datasets
 
-When using the PyTorch implementation of the STR benchmark model [1], images need to be converted into an LMDB dataset. See [this section](https://github.com/clovaai/deep-text-recognition-benchmark#when-you-need-to-train-on-your-own-dataset-or-non-latin-language-datasets) for details. 
+When using the PyTorch implementation of the STR benchmark model [1], images need to be converted into an LMDB dataset. See [this section](https://github.com/clovaai/deep-text-recognition-benchmark#when-you-need-to-train-on-your-own-dataset-or-non-latin-language-datasets) for details. An LMDB dataset offers extremely cheap read transactions [4]. Alternatively, see [this demo](https://github.com/clovaai/deep-text-recognition-benchmark/blob/master/demo.py) that uses raw images.
 
 ### Predictions and fine-tuning
 
@@ -42,7 +41,7 @@ For fine-tuning and predictions use `train.py` and `text.py`, respectively. In b
 
 * `--Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn` to define architecture.
 * `--saved_model` to provide a path to a pre-trained model. In case of `train.py` it will be used as a starting point in fine-tuning and in the case of `test.py` it will be used for predictions.
-* `--sensitive` for the case-sensitive character. No such argument for the case-insensitive character set.
+* `--sensitive` for the case-sensitive character set. No such argument for the case-insensitive character set.
 
 Specifically for fine-tuning use: 
 * `--FT` to signal that model parameters must be initialized from a pre-trained model in `--saved_model` and not randomly. 
@@ -56,7 +55,7 @@ Specifically for predicting use:
 
 Note that `test.py` outputs its logs and a copy of the evaluated model into `/result`.
 
-All other arguments are described inside the scripts. Original instructions for using the scripts in `/model` are available [here](https://github.com/clovaai/deep-text-recognition-benchmark#training-and-evaluation).
+All other arguments are described inside the scripts. Original instructions for using the scripts in `/model` are available [here](https://github.com/clovaai/deep-text-recognition-benchmark).
 
 For example, to fine-tune one of our case-sensitive models on an additional dataset:
 
@@ -103,12 +102,14 @@ CUDA_VISIBLE_DEVICES=0 python3 test.py \
 
 [3]: Marti, U. V., & Bunke, H. (2002). The IAM-database: an English sentence database for offline handwriting recognition. *International Journal on Document Analysis and Recognition*, 5(1), 39-46. https://doi.org/10.1007/s100320200071
 
+[4]: Lightning Memory-Mapped Database. Homepage: https://www.symas.com/lmdb
+
 ## Citation
 
 ```
 @article{kass2022attentionhtr,
   title={AttentionHTR: Handwritten Text Recognition Based on Attention Encoder-Decoder Networks},
-  author={Kass, D and Vats, E.},
+  author={Kass, D. and Vats, E.},
   journal={arXiv preprint arXiv:2201.09390},
   year={2022}
 }
