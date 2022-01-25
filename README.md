@@ -49,6 +49,7 @@ Specifically for fine-tuning use:
 * `--train_data` and `--valid_data` to provide paths to training and validation data, respectively. 
 * `--select_data "/"` and `--batch_ratio 1` to use all data. Can be used to define stratified batches.
 * `--manualSeed` to assign an integer identifyer for the resulting model. The original purpose of this argument is to set a random seed.
+* `--patience` to set the number of epochs to wait for the validation loss to decrease below the last minimum.
 
 Specifically for predicting use:
 * `--eval_data` to provide a path to evaluation data.
