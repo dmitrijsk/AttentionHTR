@@ -1,3 +1,5 @@
+""" a modified version of deep-text-recognition-benchmark repository https://github.com/clovaai/deep-text-recognition-benchmark/blob/master/test.py """
+
 import os
 import time
 import string
@@ -86,6 +88,15 @@ def validation(model, criterion, evaluation_loader, converter, opt):
     infer_time = 0
     valid_loss_avg = Averager()
 
+    # Export predictions only when testing
+    # because dir `/result/{opt.exp_name}` is created only during testing,
+    # but this function is also be called by train.py.
+    # Log file with predictions contains the dir of test data.
+    if hasattr(opt, 'eval_data'):
+        eval_dir = opt.eval_data.split("/")[-1]
+        log_predictions = open(f'./result/{opt.exp_name}/log_predictions_{eval_dir}.txt', 'a')
+        log_predictions.write(f'batch,target,prediction,match,cum_match\n')
+
     for i, (image_tensors, labels) in enumerate(evaluation_loader):
         batch_size = image_tensors.size(0)
         length_of_data = length_of_data + batch_size
@@ -156,6 +167,10 @@ def validation(model, criterion, evaluation_loader, converter, opt):
             if pred == gt:
                 n_correct += 1
 
+            # Export predictions only when testing. This function is also be called by train.py.
+            if hasattr(opt, 'eval_data'):
+                log_predictions.write(f'{i},{gt},{pred},{int(pred == gt)},{n_correct}\n')
+
             '''
             (old version) ICDAR2017 DOST Normalized Edit Distance https://rrc.cvc.uab.es/?ch=7&com=tasks
             "For each word we calculate the normalized edit distance to the length of the ground truth transcription."
@@ -169,9 +184,9 @@ def validation(model, criterion, evaluation_loader, converter, opt):
             if len(gt) == 0 or len(pred) == 0:
                 norm_ED += 0
             elif len(gt) > len(pred):
-                norm_ED += 1 - edit_distance(pred, gt) / len(gt)
+                norm_ED += edit_distance(pred, gt) / len(gt)
             else:
-                norm_ED += 1 - edit_distance(pred, gt) / len(pred)
+                norm_ED += edit_distance(pred, gt) / len(gt) # Changed to gt from pred.
 
             # calculate confidence score (= multiply of pred_max_prob)
             try:
@@ -182,7 +197,11 @@ def validation(model, criterion, evaluation_loader, converter, opt):
             # print(pred, gt, pred==gt, confidence_score)
 
     accuracy = n_correct / float(length_of_data) * 100
-    norm_ED = norm_ED / float(length_of_data)  # ICDAR2019 Normalized Edit Distance
+    norm_ED = norm_ED / float(length_of_data)  # ICDAR2019 Normalized Edit Distance https://arxiv.org/pdf/1909.07741.pdf
+
+    # Export predictions only when testing. This function is also be called by train.py.
+    if hasattr(opt, 'eval_data'):
+        log_predictions.close()
 
     return valid_loss_avg.val(), accuracy, norm_ED, preds_str, confidence_score_list, labels, infer_time, length_of_data
 
@@ -233,11 +252,14 @@ def test(opt):
                 shuffle=False,
                 num_workers=int(opt.workers),
                 collate_fn=AlignCollate_evaluation, pin_memory=True)
-            _, accuracy_by_best_model, _, _, _, _, _, _ = validation(
+            _, accuracy_by_best_model, norm_ED, _, _, _, _, _ = validation(
                 model, criterion, evaluation_loader, converter, opt)
             log.write(eval_data_log)
-            print(f'{accuracy_by_best_model:0.3f}')
-            log.write(f'{accuracy_by_best_model:0.3f}\n')
+            print(f'Accuracy: {accuracy_by_best_model:0.8f}')
+            print(f'Norm ED: {norm_ED:0.8f}')
+            
+            log.write(f'Accuracy: {accuracy_by_best_model:0.8f}\n')
+            log.write(f'Norm ED: {norm_ED:0.8f}\n')
             log.close()
 
 

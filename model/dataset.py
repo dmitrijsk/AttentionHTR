@@ -1,3 +1,5 @@
+""" a modified version of deep-text-recognition-benchmark repository https://github.com/clovaai/deep-text-recognition-benchmark/blob/master/dataset.py """
+
 import os
 import sys
 import re
@@ -120,6 +122,15 @@ def hierarchical_dataset(root, opt, select_data='/'):
                 print(sub_dataset_log)
                 dataset_log += f'{sub_dataset_log}\n'
                 dataset_list.append(dataset)
+
+                # Export predictions only when testing
+                # because dir `/result/{opt.exp_name}` is created only during testing,
+                # but this function is also be called by train.py.
+                if hasattr(opt, 'eval_data'):
+                    eval_dir = opt.eval_data.split("/")[-1]
+                    with open(f"./result/{opt.exp_name}/log_filtered_index_list_{eval_dir}.txt", "a", encoding="utf-8") as f:
+                        for e in dataset.filtered_index_list:
+                            f.write(f"{e}\n")
 
     concatenated_dataset = ConcatDataset(dataset_list)
 
