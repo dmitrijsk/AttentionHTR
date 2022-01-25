@@ -25,6 +25,20 @@ Print the character sets using the Python `string` module: `string.printable[:36
 
 Pre-trained STR benchmark models can be downloaded from [here](https://github.com/clovaai/deep-text-recognition-benchmark).
 
+## Demo
+
+* Download and place the `AttentionHTR-General-sensitive.pth` model into `/model/saved_models`.
+* Directory `/dataset-demo` contains demo images. Go to `/model` and create an LMDB dataset from them with `python3 create_lmdb_dataset.py --inputPath ../dataset-demo/ --gtFile ../dataset-demo/gt.txt --outputPath result/dataset-demo/`. Note that under Windows you may need to tune the `map_size` parameter manually for the `lmdb.open()` function.
+* Obtain predictions with `python3 test.py --eval_data result/dataset-demo --Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn --saved_model saved_models/AttentionHTR-General-sensitive.pth --sensitive`. The last two rows in the terminal should be
+
+    ````
+    Accuracy: 90.00000000
+    Norm ED: 0.04000000
+    ````
+
+* Inspect predictions in `/model/result/AttentionHTR-General-sensitive.pth/log_predictions_dataset-demo.txt`. Columns: batch number, ground truth string, predicted string, match (0/1), running accuracy.  
+
+
 ## Use the models for predictions or fine-tuning
 
 ### Partitions
@@ -37,7 +51,7 @@ When using the PyTorch implementation of the STR benchmark model [1], images nee
 
 ### Predictions and fine-tuning
 
-For fine-tuning and predictions use `train.py` and `text.py`, respectively. In both cases use the following arguments:
+For fine-tuning and predictions use `train.py` and `test.py` in the `/model` directory. In both cases use the following arguments:
 
 * `--Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn` to define architecture.
 * `--saved_model` to provide a path to a pre-trained model. In case of `train.py` it will be used as a starting point in fine-tuning and in the case of `test.py` it will be used for predictions.
