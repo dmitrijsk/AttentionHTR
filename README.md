@@ -10,8 +10,9 @@ For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390
 This work was tested with Python 3.6.8, PyTorch 1.9.0, CUDA 11.5 and CentOS Linux release 7.9.2009 (Core). Create a new virtual environment and install all the necessary Python packages:
 
 ```
-python3 -m venv attentionhtr
-source attentionhtr/bin/activate
+python3 -m venv attentionhtr-env
+source attentionhtr-env/bin/activate
+pip install --upgrade pip
 python3 -m pip install -r AttentionHTR/requirements.txt
 ```
 
