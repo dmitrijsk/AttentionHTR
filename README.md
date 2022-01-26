@@ -1,14 +1,25 @@
 # AttentionHTR
 
-PyTorch implementation of an end-to-end Handwritten Text Recognition (HTR) system based on attention encoder-decoder networks. Scene Text Recognition (STR) benchmark model [1], trained on synthetic scene text images, is used to perform transfer learning from the STR domain to HTR. Different fine-tuning approaches are investigated using the multi-writer datasets: Imgur5K [2] and IAM [3]. 
+PyTorch implementation of an end-to-end Handwritten Text Recognition (HTR) system based on attention encoder-decoder networks. [Scene Text Recognition (STR) benchmark model](https://github.com/clovaai/deep-text-recognition-benchmark) [1], trained on synthetic scene text images, is used to perform transfer learning from the STR domain to HTR. Different fine-tuning approaches are investigated using the multi-writer datasets: [Imgur5K](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset) [2] and [IAM](https://fki.tic.heia-fr.ch/databases/iam-handwriting-database) [3]. 
 
 For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390
 
-## Getting started
 
-* Download our pre-trained models from [here](https://drive.google.com/drive/folders/1h6edewgRUTJPzI81Mn0eSsqItnk9RMeO?usp=sharing). Details [below](#our-pre-trained-models).
-* Use the pre-trained models for predictions or fine-tuning on additional datasets using an implementation in [`/model`](https://github.com/dmitrijsk/AttentionHTR/tree/main/model), which is a modified version of the [official PyTorch implementation of the STR benchmark](https://github.com/clovaai/deep-text-recognition-benchmark) [1]. Details [below](#predictions-and-fine-tuning).
-* Links to datasets: [Imgur5K](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset), [IAM](https://fki.tic.heia-fr.ch/databases/iam-handwriting-database).
+## Dependencies
+
+This work was tested with Python 3.6.8, PyTorch 1.9.0, CUDA 11.5 and CentOS Linux release 7.9.2009 (Core). Create a new virtual environment and install all the necessary Python packages:
+
+```
+python3 -m venv attentionhtr
+source attentionhtr/bin/activate
+python3 -m pip install -r AttentionHTR/requirements.txt
+```
+
+## Content
+
+* [Download our pre-trained models.](#our-pre-trained-models)
+* [Run the demo for predicting words from images.](#demo)
+* [Use the pre-trained models for predictions or fine-tuning on additional datasets.](#use-the-models-for-fine-tuning-or-predictions)
 
 
 ## Our pre-trained models
@@ -27,19 +38,19 @@ Pre-trained STR benchmark models can be downloaded from [here](https://github.co
 
 ## Demo
 
-* Download and place the `AttentionHTR-General-sensitive.pth` model into `/model/saved_models`.
+* Download the `AttentionHTR-General-sensitive.pth` model and place it into `/model/saved_models`.
 * Directory `/dataset-demo` contains demo images. Go to `/model` and create an LMDB dataset from them with `python3 create_lmdb_dataset.py --inputPath ../dataset-demo/ --gtFile ../dataset-demo/gt.txt --outputPath result/dataset-demo/`. Note that under Windows you may need to tune the `map_size` parameter manually for the `lmdb.open()` function.
-* Obtain predictions with `python3 test.py --eval_data result/dataset-demo --Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn --saved_model saved_models/AttentionHTR-General-sensitive.pth --sensitive`. The last two rows in the terminal should be
+* Obtain predictions with `python3 test.py --eval_data result/dataset-demo --Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn --saved_model saved_models/AttentionHTR-General-sensitive.pth --sensitive`. The last two rows in the terminal should be 
 
     ````
     Accuracy: 90.00000000
     Norm ED: 0.04000000
     ````
 
-* Inspect predictions in `/model/result/AttentionHTR-General-sensitive.pth/log_predictions_dataset-demo.txt`. Columns: batch number, ground truth string, predicted string, match (0/1), running accuracy.  
+* Inspect predictions in `/model/result/AttentionHTR-General-sensitive.pth/log_predictions_dataset-demo.txt`. Columns: batch number, ground truth string, predicted string, match (0/1), running accuracy. 
 
 
-## Use the models for predictions or fine-tuning
+## Use the models for fine-tuning or predictions
 
 ### Partitions
 
@@ -49,9 +60,9 @@ Prepare the train, validation (for fine-tuning) and test (for testing and for pr
 
 When using the PyTorch implementation of the STR benchmark model [1], images need to be converted into an LMDB dataset. See [this section](https://github.com/clovaai/deep-text-recognition-benchmark#when-you-need-to-train-on-your-own-dataset-or-non-latin-language-datasets) for details. An LMDB dataset offers extremely cheap read transactions [4]. Alternatively, see [this demo](https://github.com/clovaai/deep-text-recognition-benchmark/blob/master/demo.py) that uses raw images.
 
-### Predictions and fine-tuning
+### Predictions and fine-tuning 
 
-For fine-tuning and predictions use `train.py` and `test.py` in the `/model` directory. In both cases use the following arguments:
+The pre-trained models can be used for predictions or fine-tuning on additional datasets using an implementation in `/model`, which is a modified version of the [official PyTorch implementation of the STR benchmark](https://github.com/clovaai/deep-text-recognition-benchmark) [1]. Use `test.py` for predictions and `train.py` for fine-tuning. In both cases use the following arguments:
 
 * `--Transformation TPS --FeatureExtraction ResNet --SequenceModeling BiLSTM --Prediction Attn` to define architecture.
 * `--saved_model` to provide a path to a pre-trained model. In case of `train.py` it will be used as a starting point in fine-tuning and in the case of `test.py` it will be used for predictions.
