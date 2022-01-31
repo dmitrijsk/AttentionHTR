@@ -55,7 +55,7 @@ Pre-trained STR benchmark models can be downloaded from [here](https://github.co
 
 ### Partitions
 
-Prepare the train, validation (for fine-tuning) and test (for testing and for predicting on unseen data) partitions with word-level images. For the Imgur5K and the IAM datasets you may use our scripts in [`/process-datasets`](https://github.com/dmitrijsk/AttentionHTR/tree/main/process-datasets).
+Prepare the train, validation (for fine-tuning) and test (for testing and for predicting on unseen data) partitions with word-level images. For the Imgur5K and the IAM datasets you may use our scripts in [`/datasets`](https://github.com/dmitrijsk/AttentionHTR/tree/main/datasets).
 
 ### LMDB datasets
 

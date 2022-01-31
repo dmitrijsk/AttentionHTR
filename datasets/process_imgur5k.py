@@ -22,7 +22,7 @@ def parse_args():
         "--out",
         default="imgur5k",
         required=False,
-        help="Name of the folder to contain output.")
+        help="Prefix of the directory to contain output.")
 
     parser.add_argument(
         "--idx_from",
@@ -64,7 +64,7 @@ def parse_args():
 
 
 def resize(img, desired_height=32):
-    """Resize images before displaying them"""
+    """Resize images before displaying them."""
     h, w = img.shape[0], img.shape[1]
     scale = h / desired_height
     img = cv2.resize(img, (int(w / scale), desired_height))
@@ -72,7 +72,7 @@ def resize(img, desired_height=32):
 
 
 def create_output_paths(paths_dict):
-    """Create output directories if do not exist"""
+    """Create output directories if do not exist."""
     for path in paths_dict.values():
         Path(path).mkdir(parents=True, exist_ok=True)
 
