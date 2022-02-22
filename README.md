@@ -50,6 +50,17 @@ Pre-trained STR benchmark models can be downloaded from [here](https://github.co
 
 * Inspect predictions in `/model/result/AttentionHTR-General-sensitive.pth/log_predictions_dataset-demo.txt`. Columns: batch number, ground truth string, predicted string, match (0/1), running accuracy. 
 
+Prediction results:
+
+| Ground truth   | This  | is    | the   | AttentionHTR | demo! |
+| :---           | :---: | :---: | :---: | :---:        | :---: |
+| **Author 1**   | <img src="./dataset-demo/demo/01-01.png" height="50"> | <img src="./dataset-demo/demo/01-02.png" height="50"> | <img src="./dataset-demo/demo/01-03.png" height="50"> | <img src="./dataset-demo/demo/01-04.png" height="50"> | <img src="./dataset-demo/demo/01-05.png" height="50"> |
+| **Prediction** | This  | is    | the   | AttentionHTR | demo! |
+| **Match**      | 1     | 1     | 1     | 1            | 1     |
+| **Author 2**   | <img src="./dataset-demo/demo/02-01.png" height="50"> | <img src="./dataset-demo/demo/02-02.png" height="50"> | <img src="./dataset-demo/demo/02-03.png" height="50"> | <img src="./dataset-demo/demo/02-04.png" height="50"> | <img src="./dataset-demo/demo/02-05.png" height="50"> |
+| **Prediction** | This  | is    | the   | AttentionHTR | demel |
+| **Match**      | 1     | 1     | 1     | 1            | 0     |
+
 
 ## Use the models for fine-tuning or predictions
 
