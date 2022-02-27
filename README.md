@@ -144,9 +144,9 @@ A case-sensitive model is used as an example. We trained five models with differ
 
 The ablation study highlights that both transfer learning and the attention mechanism help reduce both CER and WER. The lowest errors are achieved when both transfer learning and attention mechanism are used. The effect of each component depends on which of them comes first. However, in both cases transfer learning is relatively more important among the two studied components as it results in a significantly larger reduction in both WER and CER. As an example, a figure below depicts the changes in WER when transfer learning and then the attention mechanism are introduced.
 
-<center>
-<img src="./ablation-study-images/ablation-study-tl-attn.png" width="75%">
-</center>
+<div class="center">
+<img src="./ablation-study-images/ablation-study-tl-attn.png" width="50%">
+</div>
 
 ## Acknowledgements
 
