@@ -21,6 +21,7 @@ python3 -m pip install -r AttentionHTR/requirements.txt
 * [Download our pre-trained models.](#our-pre-trained-models)
 * [Run the demo for predicting words from images.](#demo)
 * [Use the pre-trained models for predictions or fine-tuning on additional datasets.](#use-the-models-for-fine-tuning-or-predictions)
+* [The ablation study that determines the importance of transfer learning and the attention mechanism.](#ablation-study)
 
 
 ## Our pre-trained models
@@ -124,6 +125,30 @@ CUDA_VISIBLE_DEVICES=0 python3 test.py \
 --saved_model saved_models/AttentionHTR-General.pth \
 --sensitive
 ```
+
+## Ablation study
+
+The table below summarizes the ablation study we performed to determine the importance of two components of the proposed framework:
+
+1. The usage of transfer learning. "None" indicates that the model was trained with randomly initialized parameters.
+2. The prediction module with two options: Connectionist Temporal Classification (CTC) and content-based attention mechanism.
+
+A case-sensitive model is used as an example. We trained five models with different initialization random seeds for each combination and averaged their validation set CER and WER. Changes in errors against the baseline in the top row are in parentheses. The lowest errors and corresponding components are shown in **bold**.
+
+| #                   | Transfer learning             | Prediction     | Val-CER  | Val-WER   |
+| --------            | --------                      | --------       | :------: | :------:  |
+| 1$^a$        | None                          | CTC            |7.12	   | 19.77     |
+| 2                   | None                          | Attention      |6.79 (-0.33)	   | 18.01 (-1.77)     |
+| 3                   | STR $\rightarrow$ Imgur5K     | CTC            |5.32 (-1.80)	   | 14.84 (-4.93)     |
+| 4                   | **STR $\rightarrow$ Imgur5K** | **Attention**  | **4.84** (-2.28) | **11.97** (-7.81) |
+
+$^a$ Used as a baseline.
+
+The ablation study highlights that both transfer learning and the attention mechanism help reduce both CER and WER. The lowest errors are achieved when both transfer learning and attention mechanism are used. The effect of each component depends on which of them comes first. However, in both cases transfer learning is relatively more important among the two studied components as it results in a significantly larger reduction in both WER and CER. As an example, a figure below depicts the changes in WER when transfer learning and then the attention mechanism are introduced.
+
+<center>
+<img src="./ablation-study-images/ablation-study-tl-attn.png" width="90%">
+</center>center>
 
 ## Acknowledgements
 
