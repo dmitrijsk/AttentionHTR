@@ -2,7 +2,7 @@
 
 PyTorch implementation of an end-to-end Handwritten Text Recognition (HTR) system based on attention encoder-decoder networks. [Scene Text Recognition (STR) benchmark model](https://github.com/clovaai/deep-text-recognition-benchmark) [1], trained on synthetic scene text images, is used to perform transfer learning from the STR domain to HTR. Different fine-tuning approaches are investigated using the multi-writer datasets: [Imgur5K](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset) [2] and [IAM](https://fki.tic.heia-fr.ch/databases/iam-handwriting-database) [3]. 
 
-For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390
+For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390. Accepted for IAPR International Workshop on Document Analysis Systems (DAS), IEEE, 2022.
 
 
 ## Dependencies
