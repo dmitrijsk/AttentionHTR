@@ -150,6 +150,7 @@ The ablation study highlights that both transfer learning and the attention mech
 
 ## Acknowledgements
 
+* This work has been partially supported by the Riksbankens Jubileumsfond (Reference number IN20-0040, Labour's Memory project). 
 * Our implementation is based on [Clova AI's deep text recognition benchmark](https://github.com/clovaai/deep-text-recognition-benchmark).
 * The authors would like to thank Facebook Research for [the Imgur5K dataset](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset).
 * The computations were performed through resources provided by the Swedish National Infrastructure for Computing (SNIC) at Chalmers Centre for Computational Science and Engineering (C3SE). 
@@ -167,11 +168,13 @@ The ablation study highlights that both transfer learning and the attention mech
 ## Citation
 
 ```
-@article{kass2022attentionhtr,
+@inproceedings{kass2022attentionhtr,
   title={AttentionHTR: Handwritten Text Recognition Based on Attention Encoder-Decoder Networks},
-  author={Kass, D. and Vats, E.},
-  journal={arXiv preprint arXiv:2201.09390},
-  year={2022}
+  author={Kass, Dmitrijs and Vats, Ekta},
+  booktitle={International Workshop on Document Analysis Systems},
+  pages={507--522},
+  year={2022},
+  organization={Springer}
 }
 ```
 
