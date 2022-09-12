@@ -2,7 +2,9 @@
 
 PyTorch implementation of an end-to-end Handwritten Text Recognition (HTR) system based on attention encoder-decoder networks. [Scene Text Recognition (STR) benchmark model](https://github.com/clovaai/deep-text-recognition-benchmark) [1], trained on synthetic scene text images, is used to perform transfer learning from the STR domain to HTR. Different fine-tuning approaches are investigated using the multi-writer datasets: [Imgur5K](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset) [2] and [IAM](https://fki.tic.heia-fr.ch/databases/iam-handwriting-database) [3]. 
 
-For more details, refer to our paper at arXiv: https://arxiv.org/abs/2201.09390. Accepted for IAPR International Workshop on Document Analysis Systems (DAS), IEEE, 2022.
+For more details, refer to our paper [here](https://link.springer.com/chapter/10.1007/978-3-031-06555-2_34) or at [arXiv](https://arxiv.org/abs/2201.09390). 
+
+In: Uchida, S., Barney, E., Eglin, V. (eds) Document Analysis Systems. DAS 2022. Lecture Notes in Computer Science, vol 13237. Springer, Cham, 2022. DOI: https://doi.org/10.1007/978-3-031-06555-2_34
 
 
 ## Dependencies
@@ -150,9 +152,10 @@ The ablation study highlights that both transfer learning and the attention mech
 
 ## Acknowledgements
 
-* This work has been partially supported by the Riksbankens Jubileumsfond (Reference number IN20-0040, Labour's Memory project). 
+* This work has been partially supported by the Riksbankens Jubileumsfond (Reference number IN20-0040), [Labour's memory project](https://www.rj.se/en/grants/2020/labours-memory.-digitization-of-annual-and-financial-reports-of-blue-collar-worker-unions-1880-2020/).
 * Our implementation is based on [Clova AI's deep text recognition benchmark](https://github.com/clovaai/deep-text-recognition-benchmark).
 * The authors would like to thank Facebook Research for [the Imgur5K dataset](https://github.com/facebookresearch/IMGUR5K-Handwriting-Dataset).
+* The authors would like to thank the Centre for Digital Humanities Uppsala [(CDHU)](https://www.abm.uu.se/cdhu-eng) for their kind support and encouragement.
 * The computations were performed through resources provided by the Swedish National Infrastructure for Computing (SNIC) at Chalmers Centre for Computational Science and Engineering (C3SE). 
 
 ## References
