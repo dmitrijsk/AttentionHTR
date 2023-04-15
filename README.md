@@ -183,6 +183,6 @@ The ablation study highlights that both transfer learning and the attention mech
 
 ## Contact
 
-Dmitrijs Kass (dmitrijs.kass@it.uu.se)
+Dmitrijs Kass (dmitrijs.kass@gmail.com )
 
-Ekta Vats (ekta.vats@abm.uu.se)
+Ekta Vats (ektavats@gmail.com)
