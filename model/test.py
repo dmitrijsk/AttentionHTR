@@ -49,7 +49,7 @@ def benchmark_all_eval(model, criterion, converter, opt, calculate_infer_time=Fa
         evaluation_loader = torch.utils.data.DataLoader(
             eval_data, batch_size=evaluation_batch_size,
             shuffle=False,
-            num_workers=int(opt.workers),
+            num_workers=0,
             collate_fn=AlignCollate_evaluation, pin_memory=True)
 
         _, accuracy_by_best_model, norm_ED_by_best_model, _, _, _, infer_time, length_of_data = validation(
@@ -250,7 +250,7 @@ def test(opt):
             evaluation_loader = torch.utils.data.DataLoader(
                 eval_data, batch_size=opt.batch_size,
                 shuffle=False,
-                num_workers=int(opt.workers),
+                num_workers=0,
                 collate_fn=AlignCollate_evaluation, pin_memory=True)
             _, accuracy_by_best_model, norm_ED, _, _, _, _, _ = validation(
                 model, criterion, evaluation_loader, converter, opt)
@@ -267,7 +267,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--eval_data', required=True, help='path to evaluation dataset')
     parser.add_argument('--benchmark_all_eval', action='store_true', help='evaluate 10 benchmark evaluation datasets')
-    parser.add_argument('--workers', type=int, help='number of data loading workers', default=4)
+    parser.add_argument('--workers', type=int, help='number of data loading workers', default=0)
     parser.add_argument('--batch_size', type=int, default=192, help='input batch size')
     parser.add_argument('--saved_model', required=True, help="path to saved_model to evaluation")
     """ Data processing """

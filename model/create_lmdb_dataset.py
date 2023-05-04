@@ -1,12 +1,9 @@
-""" a modified version of CRNN torch repository https://github.com/bgshih/crnn/blob/master/tool/create_dataset.py """
-
 import fire
 import os
 import lmdb
 import cv2
-
 import numpy as np
-
+import re
 
 def checkImageIsValid(imageBin):
     if imageBin is None:
@@ -18,20 +15,18 @@ def checkImageIsValid(imageBin):
         return False
     return True
 
-
 def writeCache(env, cache):
     with env.begin(write=True) as txn:
         for k, v in cache.items():
             txn.put(k, v)
 
-
-def createDataset(inputPath, gtFile, outputPath, checkValid=True):
+def createDataset(inputPath, gtFile, outputPath, checkValid: bool=True):
     """
     Create LMDB dataset for training and evaluation.
     ARGS:
         inputPath  : input folder path where starts imagePath
-        outputPath : LMDB output path
         gtFile     : list of image path and label
+        outputPath : LMDB output path
         checkValid : if true, check the validity of every image
     """
     os.makedirs(outputPath, exist_ok=True)
@@ -47,25 +42,18 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
         imagePath, label = datalist[i].strip('\n').split('\t')
         imagePath = os.path.join(inputPath, imagePath)
 
-        # # only use alphanumeric data
-        # if re.search('[^a-zA-Z0-9]', label):
-        #     continue
-
         if not os.path.exists(imagePath):
-            print('%s does not exist' % imagePath)
+            with open(os.path.join(outputPath, 'error_image_log.txt'), 'a', encoding='utf-8') as log:
+                log.write('%s does not exist\n' % imagePath)
             continue
+
         with open(imagePath, 'rb') as f:
             imageBin = f.read()
-        if checkValid:
-            try:
-                if not checkImageIsValid(imageBin):
-                    print('%s is not a valid image' % imagePath)
-                    continue
-            except:
-                print('error occured', i)
-                with open(outputPath + '/error_image_log.txt', 'a') as log:
-                    log.write('%s-th image data occured error\n' % str(i))
-                continue
+
+        if checkValid and not checkImageIsValid(imageBin):
+            with open(os.path.join(outputPath, 'error_image_log.txt'), 'a', encoding='utf-8') as log:
+                log.write('%s is not a valid image\n' % imagePath)
+            pass
 
         imageKey = 'image-%09d'.encode() % cnt
         labelKey = 'label-%09d'.encode() % cnt
@@ -75,13 +63,15 @@ def createDataset(inputPath, gtFile, outputPath, checkValid=True):
         if cnt % 1000 == 0:
             writeCache(env, cache)
             cache = {}
-            print('Written %d / %d' % (cnt, nSamples))
+            with open(os.path.join(outputPath, 'log.txt'), 'a', encoding='utf-8') as log:
+                log.write('%s-th image data occurred error\n' % str(i))
         cnt += 1
-    nSamples = cnt-1
+    
+    nSamples = cnt - 1
     cache['num-samples'.encode()] = str(nSamples).encode()
     writeCache(env, cache)
     print('Created dataset with %d samples' % nSamples)
 
 
 if __name__ == '__main__':
-    fire.Fire(createDataset)
+   fire.Fire(createDataset)
